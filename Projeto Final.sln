@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{62857111-607E-404B-8A82-089E29422F47}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FichaRPG", "backend\FichaRPG\FichaRPG.csproj", "{050D9F19-C1C7-401A-8E74-18CCB1B31912}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{050D9F19-C1C7-401A-8E74-18CCB1B31912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{050D9F19-C1C7-401A-8E74-18CCB1B31912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{050D9F19-C1C7-401A-8E74-18CCB1B31912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{050D9F19-C1C7-401A-8E74-18CCB1B31912}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{050D9F19-C1C7-401A-8E74-18CCB1B31912} = {62857111-607E-404B-8A82-089E29422F47}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D8DBF61-DBA9-4426-9F42-791EEF0C5239}
+	EndGlobalSection
+EndGlobal
