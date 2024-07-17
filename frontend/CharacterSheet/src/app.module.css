@@ -1,0 +1,13 @@
+.Overall{
+  background: var(--gray-900);
+  padding: 1rem;
+  color: var(--white);
+  font-size: 18px;
+  align-items: center;
+}
+
+.Left{
+  max-width: 25%;
+  border-right: 3px solid var(--white);
+  border-left: 3px solid var(--white);
+}

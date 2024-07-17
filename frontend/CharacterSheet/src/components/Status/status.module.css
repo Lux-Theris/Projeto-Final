@@ -1,0 +1,26 @@
+.table{
+  display: flex;
+}
+
+.table th{
+  border: 3px solid;
+  padding: 5px;
+  border-color: var(--white);
+}
+
+.grid{
+  display: grid;
+  border: 3px solid var(--white);
+}
+
+.grid th{
+  border: 1px solid var(--white);
+  padding: 5px;
+  width: 60%;
+}
+
+.grid td{
+  border: 1px solid var(--white);
+  padding: 5px;
+  width: 90%;
+}

@@ -2,14 +2,24 @@ import styles from './basic.module.css'
 
 export function Basic() {
   return (
-    <div>
+    <div className={styles.grid}>
       <img src='' alt='IMAGEM DE PERSONAGEM AQUI' />
-      <div className={styles.grid}>
-        <p>Name: NOME AQUI</p>
-        <p>Age: IDADE AQUI</p>
-        <p>Species: ESPÉCIE AQUI</p>
-        <p>Level: LEVEL AQUI</p>
-      </div>
+      <table className={styles.grid}>
+        <tbody className={styles.teste}>
+          <tr>
+            <th>Name:</th>
+            <td>Nome Aqui</td>
+            <th>Age:</th>
+            <td>Idade Aqui</td>
+          </tr>
+          <tr>
+            <th>Species:</th>
+            <td>ESPECIE AQUI</td>
+            <th>Level:</th>
+            <td>NÍVEL AQUI</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   )
 }
