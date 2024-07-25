@@ -2,9 +2,15 @@ import styles from './money.module.css'
 
 export function Money(){
   return(
-    <div>
-      <p>Money</p>
-      <table>
+    <div className={styles.container}>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th className={styles.titulo}>Money</th>
+          </tr>
+        </thead>
+      </table>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>Athorisnamor Token</th>

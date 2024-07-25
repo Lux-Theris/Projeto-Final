@@ -1,13 +1,29 @@
 .Overall{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background: var(--gray-900);
   padding: 1rem;
   color: var(--white);
-  font-size: 18px;
+  font-size: 100%;
   align-items: center;
+  overflow: auto;
+  min-width: max-content;
+}
+main{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
 }
 
-.Left{
-  max-width: 25%;
+.Left, .Center, .Right{
+  max-width: 33%;
   border-right: 3px solid var(--white);
   border-left: 3px solid var(--white);
+  border-top: 3px solid var(--white);
+  border-bottom: 3px solid var(--white);
+  margin: 5px;
+  padding: 10px;
+  box-sizing: border-box;
 }

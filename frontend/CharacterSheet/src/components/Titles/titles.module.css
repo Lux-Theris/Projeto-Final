@@ -21,11 +21,6 @@
   padding: 0.5rem;
 }
 
-.table td {
-  border: 1px solid var(--white);
-  padding: 0.5rem;
-}
-
 .table:first-of-type {
   margin-bottom: 0;
 }

@@ -1,5 +1,6 @@
 .table{
   display: flex;
+  border-collapse: collapse;
 }
 
 .table th{
@@ -11,6 +12,7 @@
 .grid{
   display: grid;
   border: 3px solid var(--white);
+  border-collapse: collapse;
 }
 
 .grid th{
