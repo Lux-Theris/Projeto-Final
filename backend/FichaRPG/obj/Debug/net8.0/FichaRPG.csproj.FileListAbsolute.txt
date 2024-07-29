@@ -137,3 +137,4 @@ C:\Users\felip\Desktop\Projetos\Vem Ser Dev\Projeto Final\backend\FichaRPG\obj\D
 C:\Users\felip\Desktop\Projetos\Vem Ser Dev\Projeto Final\backend\FichaRPG\obj\Debug\net8.0\ref\FichaRPG.dll
 C:\Users\felip\Desktop\Projetos\Vem Ser Dev\Projeto Final\backend\FichaRPG\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\Users\felip\Desktop\Projetos\Vem Ser Dev\Projeto Final\backend\FichaRPG\bin\Debug\net8.0\System.Text.Json.dll
+C:\Users\felip\Desktop\Projetos\Vem Ser Dev\Projeto Final\backend\FichaRPG\obj\Debug\net8.0\FichaRPG.sourcelink.json

@@ -8,85 +8,106 @@ using FichaRPG.Models;
 
 namespace FichaRPG.Controllers
 {
-  [Route("api/[controller]")]
-  [ApiController]
-  public class SheetController(SheetContext context) : ControllerBase
-  {
-    private readonly SheetContext _context = context;
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SheetController : ControllerBase
+    {
+        private readonly SheetContext _context;
 
-        //GET nas fichas (api/sheets)
+        public SheetController(SheetContext context)
+        {
+            _context = context;
+        }
+
+        // GET nas fichas (api/sheets)
         [HttpGet]
-    public async Task<ActionResult<IEnumerable<Sheet>>> GetSheets()
-    {
-      return await _context.Sheets.Include(i=>i.Skills).Include(i=>i.Inventories).ToListAsync();
-    }
-
-    //GET nas fichas por ID
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Sheet>> GetSheet(int id)
-    {
-      var sheet = await _context.Sheets.Include(i=>i.Skills).Include(i=>i.Inventories).FirstOrDefaultAsync(i=>i.ID==id);
-      if (sheet == null)
-      {
-        return NotFound();
-      }
-      return sheet;
-    }
-
-    //Dar POST nas fichas
-    [HttpPost]
-    public async Task<ActionResult<Sheet>> PostSheet (Sheet sheet)
-    {
-      _context.Sheets.Add(sheet);
-      await _context.SaveChangesAsync();
-
-      return CreatedAtAction("GetSheet", new { id = sheet.ID }, sheet);
-    }
-
-    //PUT nas fichas
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutSheet(int id, Sheet sheet)
-    {
-      if (id != sheet.ID)
-      {
-        return BadRequest();
-      }
-      _context.Entry(sheet).State = EntityState.Modified;
-      try
-      {
-        await _context.SaveChangesAsync();
-      }
-      catch (DbUpdateConcurrencyException)
-      {
-        if(!SheetExists(id))
+        public async Task<ActionResult<IEnumerable<Sheet>>> GetSheets()
         {
-          return NotFound();
+            return await _context.Sheets
+                .Include(i => i.Skills)
+                .Include(i => i.Inventories)
+                .Include(i => i.Titles)
+                .ToListAsync();
         }
-        else
+
+        // GET nas fichas por ID
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Sheet>> GetSheet(int id)
         {
-          throw;
+            var sheet = await _context.Sheets
+                .Include(i => i.Skills)
+                .Include(i => i.Inventories)
+                .Include(i => i.Titles)
+                .FirstOrDefaultAsync(i => i.ID == id);
+
+            if (sheet == null)
+            {
+                return NotFound();
+            }
+
+            return sheet;
         }
-      }
-      return NoContent();
-    }
 
-    //DELETE nas fichas
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteSheet(int id)
-    {
-      var sheet = await _context.Sheets.FindAsync(id);
-      if(sheet == null)
-      {
-        return NotFound();
-      }
-      _context.Sheets.Remove(sheet);
-      await _context.SaveChangesAsync();
-      return NoContent();
-    }
+        // POST nas fichas
+        [HttpPost]
+        public async Task<ActionResult<Sheet>> PostSheet(Sheet sheet)
+        {
+            _context.Sheets.Add(sheet);
+            await _context.SaveChangesAsync();
 
-    private bool SheetExists(int id)
-    {
-      return _context.Sheets.Any(e => e.ID == id);
+            return CreatedAtAction("GetSheet", new { id = sheet.ID }, sheet);
+        }
+
+        // PUT nas fichas
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutSheet(int id, Sheet sheet)
+        {
+            if (id != sheet.ID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(sheet).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SheetExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // DELETE nas fichas
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSheet(int id)
+        {
+            var sheet = await _context.Sheets.FindAsync(id);
+
+            if (sheet == null)
+            {
+                return NotFound();
+            }
+
+            _context.Sheets.Remove(sheet);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool SheetExists(int id)
+        {
+            return _context.Sheets.Any(e => e.ID == id);
+        }
     }
-  }
 }
