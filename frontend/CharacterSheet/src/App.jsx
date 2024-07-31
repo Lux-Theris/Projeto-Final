@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import styles from './app.module.css';
 import { Basic } from './components/Basic/Basic';
@@ -16,41 +17,70 @@ function App() {
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/sheet`);
-        
-        // Verifica o status da resposta
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-
-        // Lê a resposta como texto
-        const text = await response.text();
-        console.log('Resposta bruta da API:', text);
-
-        // Tenta analisar o texto como JSON
-        try {
-          const data = JSON.parse(text);
-          console.log('Resposta da API como JSON:', data);
-          setCharacters(data);
-        } catch (jsonError) {
-          console.error('Erro ao analisar JSON:', jsonError);
-        }
-
+        const response = await fetch(`http://localhost:5151/api/sheet`);
+        const data = await response.json();
+        setCharacters(data);
       } catch (error) {
         console.error('Erro pegando ficha:', error);
       }
     };
 
-
     fetchCharacters();
   }, []);
+  
   const handleSelectedCharacter = (character) => {
     setSelectedCharacter(character);
   };
 
+  const handleCreateCharacter = async (newCharacter) => {
+    try {
+      const response = await fetch(`http://localhost:5151/api/sheet`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newCharacter)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro HTTP ${response.status}`);
+      }
+
+      const createdCharacter = await response.json();
+      console.log('Ficha criada:', createdCharacter);
+      setCharacters(prevCharacters => [...prevCharacters, createdCharacter]);
+      setSelectedCharacter(createdCharacter);
+    } catch (error) {
+      console.error('Erro criando personagem:', error);
+    }
+  };
+
+  const handleUpdateCharacter = async (character) => {
+    try {
+      await fetch(`http://localhost:5151/api/sheet/${character.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(character)
+      });
+      setCharacters(prevCharacters =>
+        prevCharacters.map(c => (c.id === character.id ? character : c))
+      );
+      setSelectedCharacter(character);
+    } catch (error) {
+      console.error('Erro atualizando personagem: ', error);
+    }
+  };
+
   return (
     <div className={styles.Overall}>
-      <Header characters={characters} onSelectedCharacter={handleSelectedCharacter} />
+      <Header 
+        characters={characters} 
+        onSelectedCharacter={handleSelectedCharacter} 
+        onCreateCharacter={handleCreateCharacter}
+        onUpdateCharacter={handleUpdateCharacter} 
+      />
       <main>
         <div className={styles.Left}>
           <Basic character={selectedCharacter} />

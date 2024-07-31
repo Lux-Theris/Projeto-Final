@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import styles from './header.module.css';
+import { ModalH } from '../Modal Header/ModalH';
 
-export function Header({ characters, onSelectedCharacter }) {
+export function Header({ characters, onSelectedCharacter, onCreateCharacter, onUpdateCharacter }) {
   const [newCharacterName, setNewCharacterName] = useState('');
+  const [showConfirmacaoCriacao, setShowConfirmacaoCriacao] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editandoPersonagem, setEditandoPersonagem] = useState(null);
 
-  const handleSelectedCharacter = (event) => {
-    const selectedCharacter = JSON.parse(event.target.value);
-    onSelectedCharacter(selectedCharacter);
+  const handleSelectCharacter = (e) => {
+    const value = e.target.value;
+
+    if(value === 'criar-novo') {
+      setShowConfirmacaoCriacao(true);
+      setIsEditing(false);
+      setEditandoPersonagem(null);
+    } else {
+      const character = JSON.parse(value);
+      onSelectedCharacter(character);
+      setEditandoPersonagem(character);
+      setIsEditing(false);
+    }
   };
 
   const handleCreateCharacter = async () => {
@@ -32,44 +48,57 @@ export function Header({ characters, onSelectedCharacter }) {
     };
 
     try {
-      const response = await fetch(`${import.meta.env.REACT_APP_API_URL}/sheet`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newCharacter),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      onSelectedCharacter(data);
+      await onCreateCharacter(newCharacter);
       setNewCharacterName('');
+      setShowConfirmacaoCriacao(false);
     } catch (error) {
       console.error('Erro criando personagem:', error);
     }
   };
 
+  const handleCancelarCriacao = () => {
+    setNewCharacterName('');
+    setShowConfirmacaoCriacao(false);
+    document.querySelector('select').value = '';
+  }
+
+  const handleSaveChanges = async () => {
+    if (editandoPersonagem) {
+      try {
+        await onUpdateCharacter(editandoPersonagem);
+        setIsEditing(false);
+        setEditandoPersonagem(null);
+      } catch (error) {
+        console.error('Erro ao atualizar o personagem: ', error);
+      }
+    }
+  }
+
   return (
     <header className={styles.header}>
       <strong>Selecione ou Crie um Personagem</strong>
-      <select onChange={handleSelectedCharacter}>
+      <select onChange={handleSelectCharacter}>
         <option value="">Selecione um personagem</option>
         {characters.map(character => (
           <option key={character.id} value={JSON.stringify(character)}>
             {character.name}
           </option>
         ))}
+        <option value="criar-novo">Criar um novo personagem</option>
       </select>
-      <input
-        type="text"
-        value={newCharacterName}
-        onChange={(e) => setNewCharacterName(e.target.value)}
-        placeholder="Nome do novo personagem"
+      {editandoPersonagem && !isEditing && (
+        <button onClick={() => setIsEditing(true)}>Alterar</button>
+      )}
+      {isEditing && (
+        <button onClick={handleSaveChanges}>Salvar</button>
+      )}
+      <ModalH
+        isOpen={showConfirmacaoCriacao}
+        onClose={handleCancelarCriacao}
+        onConfirm={handleCreateCharacter}
+        newCharacterName={newCharacterName}
+        setNewCharacterName={setNewCharacterName}
       />
-      <button onClick={handleCreateCharacter}>Criar Novo Personagem</button>
-    </header>
+  </header>
   );
 }
