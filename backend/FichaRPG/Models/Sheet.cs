@@ -3,6 +3,7 @@ namespace FichaRPG.Models
   public class Sheet
   {
     public int ID { get; set; }
+    public string? Image { get; set; }
     public string? Name { get; set; }
     public string? Species { get; set; }
     public int Age { get; set; }

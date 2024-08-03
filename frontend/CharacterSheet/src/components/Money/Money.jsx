@@ -1,6 +1,21 @@
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from 'react';
 import styles from './money.module.css'
 
-export function Money(){
+const calcularDinheiro = (money) => {
+  const coinToStrip = 50;
+  const stripToBar = 2;
+  const barToCoin = 10;
+  const orichalcumBarToToken = 100;
+
+  const athroisnamorToken = Math.floor(money / (coinToStrip * stripToBar * barToCoin * orichalcumBarToToken));
+  money %= (coinToStrip * stripToBar * barToCoin * orichalcumBarToToken);
+
+  const orichalcumBar = Math.floor(money / (coinToStrip * stripToBar * barToCoin));
+  money %= (coinToStrip * stripToBar * barToCoin);
+}
+export function Money({ character, isEditando, onUpdateCharacterField }){
+
   return(
     <div className={styles.container}>
       <table className={styles.table}>

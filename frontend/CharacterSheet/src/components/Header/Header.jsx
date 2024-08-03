@@ -3,25 +3,26 @@
 import React, { useEffect, useState } from 'react';
 import styles from './header.module.css';
 import { ModalH } from '../Modal Header/ModalH';
+import { ModalDH } from '../Modal Header/ModalDH';
 
-export function Header({ characters, onSelectedCharacter, onCreateCharacter, onUpdateCharacter }) {
+export function Header({ characters, onSelectedCharacter, onCreateCharacter, onUpdateCharacter, onDeleteCharacter, onEditarPersonagem, onSalvarPersonagem, isEditando, selectedCharacter }) {
   const [newCharacterName, setNewCharacterName] = useState('');
   const [showConfirmacaoCriacao, setShowConfirmacaoCriacao] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editandoPersonagem, setEditandoPersonagem] = useState(null);
+  const [showConfirmacaoDelete, setShowConfirmacaoDelete] = useState(false);
 
   const handleSelectCharacter = (e) => {
     const value = e.target.value;
 
     if(value === 'criar-novo') {
       setShowConfirmacaoCriacao(true);
-      setIsEditing(false);
-      setEditandoPersonagem(null);
     } else {
+      try {
       const character = JSON.parse(value);
       onSelectedCharacter(character);
-      setEditandoPersonagem(character);
-      setIsEditing(false);
+      } catch (error){
+        console.error('Erro ao fazer parse do Json, você tentou selecionar nada?', error);
+        onSelectedCharacter(null);
+      }
     }
   };
 
@@ -62,14 +63,14 @@ export function Header({ characters, onSelectedCharacter, onCreateCharacter, onU
     document.querySelector('select').value = '';
   }
 
-  const handleSaveChanges = async () => {
-    if (editandoPersonagem) {
+  const handleDeletePersonagem = async () => {
+    if (selectedCharacter) {
       try {
-        await onUpdateCharacter(editandoPersonagem);
-        setIsEditing(false);
-        setEditandoPersonagem(null);
+        await onDeleteCharacter(selectedCharacter.id);
+        onSelectedCharacter(null);
+        setShowConfirmacaoDelete(false);
       } catch (error) {
-        console.error('Erro ao atualizar o personagem: ', error);
+        console.error('Erro deletando o personagem: ', error);
       }
     }
   }
@@ -77,7 +78,7 @@ export function Header({ characters, onSelectedCharacter, onCreateCharacter, onU
   return (
     <header className={styles.header}>
       <strong>Selecione ou Crie um Personagem</strong>
-      <select onChange={handleSelectCharacter}>
+      <select onChange={handleSelectCharacter} value={onSelectedCharacter ? JSON.stringify(onSelectedCharacter) : ''}>
         <option value="">Selecione um personagem</option>
         {characters.map(character => (
           <option key={character.id} value={JSON.stringify(character)}>
@@ -86,11 +87,14 @@ export function Header({ characters, onSelectedCharacter, onCreateCharacter, onU
         ))}
         <option value="criar-novo">Criar um novo personagem</option>
       </select>
-      {editandoPersonagem && !isEditing && (
-        <button onClick={() => setIsEditing(true)}>Alterar</button>
+      {onSelectedCharacter && !isEditando && (
+        <button onClick={onEditarPersonagem}>Alterar</button>
       )}
-      {isEditing && (
-        <button onClick={handleSaveChanges}>Salvar</button>
+      {isEditando && (
+        <>
+        <button onClick={onSalvarPersonagem}>Salvar</button>
+        <button className={styles.deletar} onClick={() => setShowConfirmacaoDelete(true)}>Apagar</button>
+        </>
       )}
       <ModalH
         isOpen={showConfirmacaoCriacao}
@@ -98,6 +102,12 @@ export function Header({ characters, onSelectedCharacter, onCreateCharacter, onU
         onConfirm={handleCreateCharacter}
         newCharacterName={newCharacterName}
         setNewCharacterName={setNewCharacterName}
+      />
+      <ModalDH
+        isOpen={showConfirmacaoDelete}
+        onClose={() => setShowConfirmacaoDelete(false)}
+        onConfirm={handleDeletePersonagem}
+        charactername={selectedCharacter ? selectedCharacter.name : ''}
       />
   </header>
   );

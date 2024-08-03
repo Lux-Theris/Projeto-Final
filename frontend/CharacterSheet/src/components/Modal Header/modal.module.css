@@ -8,6 +8,19 @@
   85% { border-color: violet; }
   100% { border-color: red; }
 }
+@keyframes red-warning {
+  0% { border-color: red; }
+  10% { border-color: rgb(153, 0, 0); }
+  20% { border-color: rgb(0, 0, 0); }
+  30% { border-color: red; }
+  40% { border-color: rgb(153, 0, 0); }
+  50% { border-color: red; }
+  60% { border-color: rgb(153, 0, 0); }
+  70% { border-color: rgb(0, 0, 0); }
+  80% { border-color: red; }
+  90% { border-color: rgb(153, 0, 0); }
+  100% { border-color: rgb(0, 0, 0); }
+}
 
 .modalFundo {
   position: fixed;
@@ -30,6 +43,28 @@
   z-index: 1; 
 }
 
+.modalContent2 {
+  background: var(--gray-600);
+  padding: 20px;
+  border-radius: 20%;
+  text-align: center;
+  border: 5px solid transparent;
+  animation: red-warning 5s linear infinite;
+  z-index: 1; 
+}
+
 .modalButtons button {
   margin: 5px;
+}
+
+.botaodelete {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.botaodelete:hover {
+  background-color: darkred;
 }
