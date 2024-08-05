@@ -8,7 +8,7 @@ namespace FichaRPG.Models
     public string? Species { get; set; }
     public int Age { get; set; }
     public int Level { get; set; }
-    public int Money { get; set; }
+    public long Money { get; set; }
     public string? Status { get; set; }
     public int HP { get; set ;}
     public int MP { get; set; }

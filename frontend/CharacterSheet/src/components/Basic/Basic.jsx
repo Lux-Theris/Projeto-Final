@@ -12,13 +12,13 @@ export function Basic({ character, isEditando, onUpdatecharacterField }) {
     }
   }, [character]);
 
-    const handleChange = (field, value) => {
-      setcharacterEditavel({
-        ...characterEditavel,
-        [field]: value,
-      });
-      onUpdatecharacterField(field, value);
-    };
+  const handleChange = (field, value) => {
+    setcharacterEditavel({
+      ...characterEditavel,
+      [field]: value,
+    });
+    onUpdatecharacterField(field, value);
+  };
     if (!character) {
         return (
           <div className={styles.grid}>

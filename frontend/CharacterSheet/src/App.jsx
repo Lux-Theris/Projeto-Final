@@ -107,7 +107,6 @@ function App() {
       handleUpdateCharacter(selectedCharacter);
     }
   };
-  console.log('NO MAIN:', selectedCharacter);
 
   return (
     <div className={styles.Overall}>
@@ -136,7 +135,11 @@ function App() {
             onUpdatecharacterField={handleUpdateCharacterField}
           />
           <Separator />
-          <Money character={selectedCharacter} />
+          <Money
+            character={selectedCharacter} 
+            isEditando={isEditando}
+            onUpdatecharacterField={handleUpdateCharacterField}
+          />
         </div>
         <div className={styles.Center}>
           <Titles character={selectedCharacter} />
