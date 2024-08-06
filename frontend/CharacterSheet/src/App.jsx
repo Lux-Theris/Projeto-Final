@@ -78,10 +78,11 @@ function App() {
   };
 
   const handleUpdateCharacterField = (field, value) => {
-    setSelectedCharacter(prevCharacters => ({
-      ...prevCharacters,
-      [field]:value,
-    }));
+    setSelectedCharacter(prevCharacter => {
+      const updatedCharacter = { ...prevCharacter, [field]: value };
+      handleUpdateCharacter(updatedCharacter);
+      return updatedCharacter;
+    });
   };
 
   const handleDeleteCharacter = async (characterId) => {
@@ -142,7 +143,11 @@ function App() {
           />
         </div>
         <div className={styles.Center}>
-          <Titles character={selectedCharacter} />
+          <Titles
+            character={selectedCharacter} 
+            isEditando={isEditando}
+            onUpdatecharacterField={handleUpdateCharacterField} 
+           />
           <Separator />
           <Inventory character={selectedCharacter} />
         </div>

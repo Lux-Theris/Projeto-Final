@@ -207,9 +207,6 @@ export function Money({ character, isEditando, onUpdatecharacterField }){
     )
   }
 
-  console.log(amounts);
-  console.log(character.money);
-
   return(
     <div className={styles.container}>
       <table className={styles.table}>

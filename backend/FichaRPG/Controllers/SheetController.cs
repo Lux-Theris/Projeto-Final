@@ -52,11 +52,25 @@ namespace FichaRPG.Controllers
         [HttpPost]
         public async Task<ActionResult<Sheet>> PostSheet(Sheet sheet)
         {
+            foreach (var title in sheet.Titles)
+            {
+                var existingTitle = await _context.Titles.FindAsync(title.ID);
+                if (existingTitle != null)
+                {
+                    _context.Entry(existingTitle).CurrentValues.SetValues(title);
+                }
+                else
+                {
+                    _context.Titles.Add(title);
+                }
+            }
+
             _context.Sheets.Add(sheet);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetSheet", new { id = sheet.ID }, sheet);
         }
+
 
         // PUT nas fichas
         [HttpPut("{id}")]
@@ -68,6 +82,19 @@ namespace FichaRPG.Controllers
             }
 
             _context.Entry(sheet).State = EntityState.Modified;
+
+            foreach (var title in sheet.Titles)
+            {
+                var existingTitle = await _context.Titles.FindAsync(title.ID);
+                if (existingTitle != null)
+                {
+                    _context.Entry(existingTitle).CurrentValues.SetValues(title);
+                }
+                else
+                {
+                    _context.Titles.Add(title);
+                }
+            }
 
             try
             {

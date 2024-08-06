@@ -1,13 +1,14 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import styles from "./titles.module.css";
 
-export function Titles( character, isEditando, onUpdatecharacterField ) {
-  const [tituloEditavel, setTituloEditavel] = useState(character?.titles || []);
-  const [novoTitulo, setNovoTitulo] = useState({name: '', description: ''});
+export function Titles({ character, isEditando, onUpdatecharacterField }) {
+  const [tituloEditavel, setTituloEditavel] = useState([]);
+  const [novoTitulo, setNovoTitulo] = useState({ name: '', description: '' });
 
   useEffect(() => {
-    if (character &&Array.isArray(character.titles)) {
+    if (character && Array.isArray(character.titles)) {
       setTituloEditavel(character.titles);
     }
   }, [character]);
@@ -15,30 +16,30 @@ export function Titles( character, isEditando, onUpdatecharacterField ) {
   const handleAddTitulo = () => {
     const updatedTitulos = [...tituloEditavel, novoTitulo];
     setTituloEditavel(updatedTitulos);
-    setNovoTitulo({ name: '', description: ''});
-    onUpdatecharacterField(updatedTitulos);
+    setNovoTitulo({ name: '', description: '' });
+    onUpdatecharacterField('title', updatedTitulos);
   };
 
   const handleRemoveTitulo = (index) => {
     const updatedTitulos = tituloEditavel.filter((_, i) => i !== index);
     setTituloEditavel(updatedTitulos);
-    onUpdatecharacterField(updatedTitulos);
+    onUpdatecharacterField('title', updatedTitulos);
   };
 
   if (!character) {
-    return(
+    return (
       <div className={styles.container}>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th className={styles.titulo}>Titles</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    )
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th className={styles.titulo}>Titles</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    );
   }
-
+console.log(character);
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -71,7 +72,7 @@ export function Titles( character, isEditando, onUpdatecharacterField ) {
           </table>
         ))
       ) : (
-        <p>Nenhum título disponível</p>
+        <p />
       )}
       {isEditando && (
         <div className={styles.novotitulo}>
