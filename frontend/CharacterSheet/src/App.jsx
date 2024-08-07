@@ -14,6 +14,7 @@ function App() {
   const [characters, setCharacters] = useState([]);
   const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [isEditando, setIsEditando] = useState(false);
+  const [editedCharacter, setEditedCharacter] = useState(null);
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -31,6 +32,7 @@ function App() {
   
   const handleSelectedCharacter = (character) => {
     setSelectedCharacter(character);
+    setEditedCharacter(character);
     setIsEditando(false);
   };
 
@@ -52,6 +54,7 @@ function App() {
       console.log('Ficha criada:', createdCharacter);
       setCharacters(prevCharacters => [...prevCharacters, createdCharacter]);
       setSelectedCharacter(createdCharacter);
+      setEditedCharacter(createdCharacter);
       setIsEditando(false);
     } catch (error) {
       console.error('Erro criando personagem:', error);
@@ -71,6 +74,7 @@ function App() {
         prevCharacters.map(c => (c.id === character.id ? character : c))
       );
       setSelectedCharacter(character);
+      setEditedCharacter(character);
       setIsEditando(false);
     } catch (error) {
       console.error('Erro atualizando personagem: ', error);
@@ -78,11 +82,7 @@ function App() {
   };
 
   const handleUpdateCharacterField = (field, value) => {
-    setSelectedCharacter(prevCharacter => {
-      const updatedCharacter = { ...prevCharacter, [field]: value };
-      handleUpdateCharacter(updatedCharacter);
-      return updatedCharacter;
-    });
+    setEditedCharacter(prevCharacters => ({ ...prevCharacters, [field]: value}));
   };
 
   const handleDeleteCharacter = async (characterId) => {
@@ -104,11 +104,14 @@ function App() {
   };
 
   const handleSalvarPersonagem = () => {
-    if (selectedCharacter) {
-      handleUpdateCharacter(selectedCharacter);
+    if (editedCharacter) {
+      handleUpdateCharacter(editedCharacter);
     }
   };
 
+  console.log('Original: ', selectedCharacter);
+  console.log('Alterado: ', editedCharacter);
+  
   return (
     <div className={styles.Overall}>
       <Header 
@@ -125,34 +128,42 @@ function App() {
       <main>
         <div className={styles.Left}>
           <Basic 
-            character={selectedCharacter} 
+            character={editedCharacter} 
             isEditando={isEditando}
             onUpdatecharacterField={handleUpdateCharacterField}
           />
           <Separator />
           <Status
-            character={selectedCharacter} 
+            character={editedCharacter} 
             isEditando={isEditando}
             onUpdatecharacterField={handleUpdateCharacterField}
           />
           <Separator />
           <Money
-            character={selectedCharacter} 
+            character={editedCharacter} 
             isEditando={isEditando}
             onUpdatecharacterField={handleUpdateCharacterField}
           />
         </div>
         <div className={styles.Center}>
           <Titles
-            character={selectedCharacter} 
+            character={editedCharacter} 
             isEditando={isEditando}
             onUpdatecharacterField={handleUpdateCharacterField} 
            />
           <Separator />
-          <Inventory character={selectedCharacter} />
+          <Inventory
+            character={editedCharacter} 
+            isEditando={isEditando}
+            onUpdatecharacterField={handleUpdateCharacterField} 
+          />
         </div>
         <div className={styles.Right}>
-          <Skills character={selectedCharacter} />
+          <Skills 
+            character={editedCharacter} 
+            isEditando={isEditando}
+            onUpdatecharacterField={handleUpdateCharacterField} 
+          />
         </div>
       </main>
     </div>

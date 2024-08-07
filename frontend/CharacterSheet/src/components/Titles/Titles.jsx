@@ -17,13 +17,13 @@ export function Titles({ character, isEditando, onUpdatecharacterField }) {
     const updatedTitulos = [...tituloEditavel, novoTitulo];
     setTituloEditavel(updatedTitulos);
     setNovoTitulo({ name: '', description: '' });
-    onUpdatecharacterField('title', updatedTitulos);
+    onUpdatecharacterField('titles', updatedTitulos);
   };
 
   const handleRemoveTitulo = (index) => {
     const updatedTitulos = tituloEditavel.filter((_, i) => i !== index);
     setTituloEditavel(updatedTitulos);
-    onUpdatecharacterField('title', updatedTitulos);
+    onUpdatecharacterField('titles', updatedTitulos);
   };
 
   if (!character) {
@@ -39,7 +39,6 @@ export function Titles({ character, isEditando, onUpdatecharacterField }) {
       </div>
     );
   }
-console.log(character);
   return (
     <div className={styles.container}>
       <table className={styles.table}>

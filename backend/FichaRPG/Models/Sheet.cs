@@ -19,8 +19,8 @@ namespace FichaRPG.Models
     public int Dexterity { get; set; }
     public int Stealth { get; set; }
     public int Precision { get; set; }
-    public IEnumerable<Skill>? Skills { get; set; }
-    public IEnumerable<Inventory>? Inventories { get; set; }
-    public IEnumerable<Title>? Titles {get; set; }
+    public List<Skill>? Skills { get; set; }
+    public List<Inventory>? Inventories { get; set; }
+    public List<Title>? Titles {get; set; }
     }
 }
