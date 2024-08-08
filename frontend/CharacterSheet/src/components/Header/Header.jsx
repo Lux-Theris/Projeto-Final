@@ -75,6 +75,8 @@ export function Header({ characters, onSelectedCharacter, onCreateCharacter, onU
     }
   }
 
+  const shouldShowAlterarButton = selectedCharacter && selectedCharacter.id && !isEditando;
+
   return (
     <header className={styles.header}>
       <strong>Selecione ou Crie um Personagem</strong>
@@ -87,7 +89,7 @@ export function Header({ characters, onSelectedCharacter, onCreateCharacter, onU
         ))}
         <option value="criar-novo">Criar um novo personagem</option>
       </select>
-      {onSelectedCharacter && !isEditando && (
+      {shouldShowAlterarButton && (
         <button onClick={onEditarPersonagem}>Alterar</button>
       )}
       {isEditando && (
