@@ -17,9 +17,12 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
+
 builder.Services.AddControllers();
-builder.Services.AddDbContext<SheetContext>(opt =>
-    opt.UseInMemoryDatabase("Sheet"));
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<SheetContext>(options => 
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
