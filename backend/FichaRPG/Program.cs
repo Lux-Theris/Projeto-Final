@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using FichaRPG.Data;
 using FichaRPG.Models;
+using Microsoft.EntityFrameworkCore.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 

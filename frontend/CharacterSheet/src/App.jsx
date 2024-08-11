@@ -15,11 +15,11 @@ function App() {
   const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [isEditando, setIsEditando] = useState(false);
   const [editedCharacter, setEditedCharacter] = useState(null);
-
+  
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const response = await fetch(`https://fsc-projeto-final-gtemb0bpbza8b7ah.eastus2-01.azurewebsites.net/api/sheet`);
+        const response = await fetch(`https://fsc-projeto-final-appservice.azurewebsites.net/api/sheet`);
         const data = await response.json();
         setCharacters(data);
       } catch (error) {
@@ -38,7 +38,7 @@ function App() {
 
   const handleCreateCharacter = async (newCharacter) => {
     try {
-      const response = await fetch(`https://fsc-projeto-final-gtemb0bpbza8b7ah.eastus2-01.azurewebsites.net/api/sheet`, {
+      const response = await fetch(`https://fsc-projeto-final-appservice.azurewebsites.net/api/sheet`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ function App() {
 
   const handleUpdateCharacter = async (character) => {
     try {
-      await fetch(`https://fsc-projeto-final-gtemb0bpbza8b7ah.eastus2-01.azurewebsites.net/api/sheet/${character.id}`, {
+      await fetch(`https://fsc-projeto-final-appservice.azurewebsites.net/api/sheet/${character.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ function App() {
 
   const handleDeleteCharacter = async (characterId) => {
     try {
-      await fetch(`https://fsc-projeto-final-gtemb0bpbza8b7ah.eastus2-01.azurewebsites.net/api/sheet/${characterId}`, {
+      await fetch(`https://fsc-projeto-final-appservice.azurewebsites.net/api/sheet/${characterId}`, {
         method: 'DELETE'
       });
       setCharacters(prevCharacters =>
