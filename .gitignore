@@ -509,3 +509,4 @@ dist-ssr
 *.sln
 *.sw?
 backend/FichaRPG/appsettings.json
+backend/FichaRPG/Migrations

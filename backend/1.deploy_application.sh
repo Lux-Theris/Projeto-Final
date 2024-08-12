@@ -28,7 +28,7 @@ echo "Location: $LOCATION"
 echo "Source: $SOURCE"
 
 cd $SOURCE && \
-zip -r ../publish.zip . && \
+zip a -tzip publish.zip "$SOURCE/*" . && \
 cd ..
 
 # Deploy to Azure Web App

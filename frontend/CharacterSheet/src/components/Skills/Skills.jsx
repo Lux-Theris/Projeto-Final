@@ -56,7 +56,7 @@ export function Skills({ character, isEditando, onUpdatecharacterField }) {
               <tr>
                 <th>{skill.type}</th>
                 <th>{skill.name}</th>
-                <th>{skill.level}</th>
+                <th>LV. {skill.level}</th>
               </tr>
               <tr>
                 <td colSpan="3">{skill.description}</td>
